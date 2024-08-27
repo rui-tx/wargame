@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <title>War Card Game</title>
+  </head>
+  <body onload="initGame()">
+    <a href="./card-list.html">Card List</a>
+    <div id="game-container">
+      <div class="list">
+        <div id="current-deck-pc">
+          <div class="card">pc deck</div>
+        </div>
+      </div>
+
+      <div class="list">
+        <div id="current-card-pc">
+          <div class="card">pc current card</div>
+        </div>
+
+        <div id="current-card-player">
+          <div class="card">player current card</div>
+        </div>
+      </div>
+
+      <div class="list">
+        <div id="current-player-pc">
+          <div class="card" onclick="generateCard()">player deck</div>
+        </div>
+      </div>
+
+      <button id="play-button" class="" onclick="generateCard()">
+        Play Card
+      </button>
+    </div>
+
+    <div class="zoom-slider">
+      <input
+        type="range"
+        min="0.6"
+        max="1.8"
+        step="0.2"
+        value="1"
+        list="marks"
+        oninput="scale(this.value)"
+      />
+      <datalist id="marks">
+        <option value="1"></option>
+      </datalist>
+    </div>
+  </body>
+  <script src="./js/zoom.js"></script>
+  <script src="./js/game.js"></script>
+</html>
