@@ -1,36 +1,7 @@
-const cardDeck = generateGameDeck();
-const playerDeck = [];
-let playerDeckCurrentIndex = 0;
-const pcDeck = [];
-let pcDeckCurrentIndex = 0;
-const warDeck = [];
-
-const getRandomCard = (deck) => {
-  const randomCard = Math.floor(Math.random() * deck.length);
-  return deck[randomCard];
-};
-
-const removeCard = (deck, card) => {
-  const index = deck.indexOf(card);
-  deck.splice(index, 1);
-  return card;
-};
-
-function fillPlayerDeck() {
-  for (let i = 0; i < 26; i += 1) {
-    const newCard = getRandomCard(cardDeck);
-    playerDeck.push(newCard);
-    removeCard(cardDeck, newCard);
-  }
-}
-
-function fillPcDeck() {
-  for (let i = 0; i < 26; i += 1) {
-    const newCard = getRandomCard(cardDeck);
-    pcDeck.push(newCard);
-    removeCard(cardDeck, newCard);
-  }
-}
+// Global Variables
+let PC_DECK = [];
+let PLAYER_DECK = [];
+const NUMBER_OF_CARDS_TO_DRAW_ON_WAR = 3;
 
 function Card(suit, card, value) {
   this.suit = suit;
@@ -40,7 +11,41 @@ function Card(suit, card, value) {
     suit.includes("club") || suit.includes("spade") ? "black" : "red";
 }
 
-function generateGameDeck() {
+const getRandomCard = function (deck) {
+  return deck[Math.floor(Math.random() * deck.length)];
+};
+
+const removeCardFromDeck = function (deck, card) {
+  const index = deck.indexOf(card);
+  deck.splice(index, 1);
+  return card;
+};
+
+const createPlayerDeckWithCardsFromDeck = function (cardDeck, amount) {
+  const deck = [];
+  for (let i = 0; i < amount; i += 1) {
+    deck.push(removeCardFromDeck(cardDeck, getRandomCard(cardDeck)));
+  }
+  return deck;
+  // return {
+  //   deck: deck,
+  //   cardDeck: cardDeck,
+  // };
+};
+
+// const fillPcDeck = function () {
+//   for (let i = 0; i < 26; i += 1) {
+//     PC_DECK.push(removeCardFromDeck(cardDeck, getRandomCard(cardDeck)));
+//   }
+// };
+
+// const fillPlayerDeck = function () {
+//   for (let i = 0; i < 26; i += 1) {
+//     PLAYER_DECK.push(removeCardFromDeck(cardDeck, getRandomCard(cardDeck)));
+//   }
+// };
+
+const generateGameDeck = function () {
   const deckSize = 13 * 4;
   const suits = ["&clubsuit;", "&spadesuit;", "&heartsuit;", "&diamondsuit;"];
   const cards = [
@@ -71,10 +76,223 @@ function generateGameDeck() {
   }
 
   return deck;
-}
+};
 
-const getCard = (newCard) => {
+const getBackCard = function (text) {
+  if (text === undefined) {
+    text = "&Wopf;&Aopf;&Ropf;";
+  }
+  const cardHtml = `
+      <div class="card">
+        <div class="card-top small-letter-suit flipped-text card-background-text">&Wopf;&Aopf;&Ropf;</div>
+        <div class="card-body">
+          <span class="card-back-1"></span>
+          <p class="small-letter-suit">${text}</p>
+        </div>
+        <div class="card-bottom small-letter-suit flipped-text card-background-text">&Gopf;&Aopf;&Mopf;&Eopf;</div>
+      </div>
+    `;
+  return cardHtml;
+};
+
+const createCardHtml = function (newCard) {
   const { suit, card, value, color } = newCard;
+  let cardHtmlBody = "";
+
+  switch (card) {
+    case "2":
+      cardHtmlBody = `<div class="card-body">
+          <span class="double-letter-suit">${suit}</span>
+          <span class="double-letter-suit flipped">${suit}</span>
+        </div>`;
+      break;
+    case "3":
+      cardHtmlBody = `<div class="card-body">
+          <span class="default-letter-suit">${suit}</span>
+          <span class="default-letter-suit">${suit}</span>
+          <span class="default-letter-suit flipped">${suit}</span>
+        </div>`;
+      break;
+    case "4":
+      cardHtmlBody = `<div class="card-body">
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+      </div>`;
+      break;
+    case "5":
+      cardHtmlBody = `<div class="card-body">
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+        </div>`;
+      break;
+    case "6":
+      cardHtmlBody = `<div class="card-body">
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+        </div>`;
+      break;
+    case "7":
+      cardHtmlBody = `<div class="card-body">
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+        </div>`;
+      break;
+    case "8":
+      cardHtmlBody = `<div class="card-body">
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+        </div>`;
+      break;
+    case "9":
+      cardHtmlBody = `<div class="card-body">
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+        </div>`;
+      break;
+    case "10":
+      cardHtmlBody = `<div class="card-body">
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">${suit}</span>
+            <span class="default-letter-suit">${suit}</span>
+          </div>
+        </div>`;
+      break;
+
+    case "J":
+      cardHtmlBody = `<div class="card-body">
+          <div class="suit-group">
+            <span class="default-letter-suit">&Jopf;</span>
+          </div>
+          <div class="suit-group">
+            <span class="double-letter-suit">${suit}</span>
+          </div>
+          <div class="suit-group flipped">
+            <span class="default-letter-suit">&Jopf;</span>
+          </div>
+        </div>`;
+      break;
+    case "Q":
+      cardHtmlBody = `<div class="card-body">
+            <div class="suit-group">
+              <span class="default-letter-suit">&Qopf;</span>
+            </div>
+            <div class="suit-group">
+              <span class="double-letter-suit">${suit}</span>
+            </div>
+            <div class="suit-group flipped">
+              <span class="default-letter-suit">&Qopf;</span>
+            </div>
+          </div>`;
+      break;
+    case "K":
+      cardHtmlBody = `<div class="card-body">
+              <div class="suit-group">
+                <span class="default-letter-suit">&Kopf;</span>
+              </div>
+              <div class="suit-group">
+                <span class="double-letter-suit">${suit}</span>
+              </div>
+              <div class="suit-group flipped">
+                <span class="default-letter-suit">&Kopf;</span>
+              </div>
+            </div>`;
+      break;
+    default:
+      cardHtmlBody = `<div class="card-body">
+          <span class="single-letter-suit">${suit}</span>
+        </div>`;
+      break;
+  }
 
   const cardHtml = `
       <div class="card ${color}">
@@ -82,49 +300,36 @@ const getCard = (newCard) => {
           <span class="small-letter-suit bold">${card}</span>
           <span class="small-letter-suit">${suit}</span>
         </div>
-        <div class="card-body">
-          <span class="single-letter-suit">${card}</span>
-          <span class="single-letter-suit">${suit}</span>
-        </div>
+        ${cardHtmlBody}
         <div class="card-bottom align-items-center">
           <span class="small-letter-suit bold">${card}</span>
           <span class="small-letter-suit">${suit}</span>
         </div>
       </div>
     `;
+
   return cardHtml;
 };
 
-const decreasePcDeckIndex = function () {
-  // --index;
-  // return index < 0 ? deck.length : index;
-  if (pcDeckCurrentIndex === 0) {
-    pcDeckCurrentIndex = pcDeck.length;
-  }
-  pcDeckCurrentIndex = pcDeckCurrentIndex - 1;
+const getCard = function (newCard) {
+  return createCardHtml(newCard);
 };
 
-const decreasePlayerDeckIndex = function () {
-  // --index;
-  // return index < 0 ? deck.length : index;
-  if (playerDeckCurrentIndex === 0) {
-    playerDeckCurrentIndex = playerDeck.length;
-  }
-  playerDeckCurrentIndex = playerDeckCurrentIndex - 1;
-};
-
-function generateCard() {
+const generateCard = function () {
   document.getElementById("game-container").classList.remove("warbg");
+  document.getElementById("current-card-pc").classList.remove("outline-win");
+  document
+    .getElementById("current-card-player")
+    .classList.remove("outline-win");
 
-  if (playerDeck.length === 0) {
-    document.getElementById("current-card-player").innerHTML =
-      "<div class='card red'>PLAYER LOSES</div>";
-    console.log("PLAYER LOSES");
-    document.getElementById("play-button").disabled = true;
-    return;
-  }
+  document.getElementById("current-deck-pc").innerHTML = getBackCard(
+    PC_DECK.length
+  );
+  document.getElementById("current-deck-player").innerHTML = getBackCard(
+    PLAYER_DECK.length
+  );
 
-  if (pcDeck.length === 0) {
+  if (PC_DECK.length === 0) {
     document.getElementById("current-card-pc").innerHTML =
       "<div class='card red'>PC LOSES</div>";
     console.log("PC LOSES");
@@ -132,100 +337,130 @@ function generateCard() {
     return;
   }
 
-  /*   if (playerDeckCurrentIndex === 0) {
-    playerDeckCurrentIndex = playerDeck.length;
-  }
-
-  if (pcDeckCurrentIndex === 0) {
-    pcDeckCurrentIndex = pcDeck.length;
-  } */
-
-  // playerDeckCurrentIndex -= 1;
-  // pcDeckCurrentIndex -= 1;
-
-  document.getElementById("current-card-pc").classList.remove("outline-win");
-  document
-    .getElementById("current-card-player")
-    .classList.remove("outline-win");
-
-  // playerDeckCurrentIndex = decreaseIndex(playerDeckCurrentIndex, playerDeck);
-  //pcDeckCurrentIndex = decreaseIndex(pcDeckCurrentIndex, pcDeck);
-
-  decreasePlayerDeckIndex();
-  decreasePcDeckIndex();
-  const playerCard = playerDeck[playerDeckCurrentIndex];
-  const pcCard = pcDeck[pcDeckCurrentIndex];
-
-  document.getElementById("current-card-pc").innerHTML = getCard(pcCard);
-  document.getElementById("current-card-player").innerHTML =
-    getCard(playerCard);
-
-  console.log(pcDeck.length);
-  console.log(pcDeck);
-  console.log(playerDeck.length);
-  console.log(playerDeck);
-  console.log(pcDeckCurrentIndex + " " + playerDeckCurrentIndex);
-
-  if (pcCard.value === playerCard.value) {
-    console.log("WAR");
-    document.getElementById("game-container").classList.add("warbg");
-
-    warDeck.push(removeCard(playerDeck, playerCard));
-
-    for (let i = 0; i < 3; i = i + 1) {
-      warDeck.push(playerDeck.pop());
-      decreasePlayerDeckIndex();
-    }
-
-    warDeck.push(removeCard(pcDeck, pcCard));
-    for (let i = 0; i < 3; i = i + 1) {
-      warDeck.push(pcDeck.pop());
-      decreasePcDeckIndex();
-    }
-
-    if ((Math.random(0, 1) * 2) % 0) {
-      document.getElementById("current-card-pc").classList.add("outline-win");
-      // pcDeck.push(playerCard);
-      // playerDeck.pop();
-      pcDeck.push(...warDeck);
-      console.log("PC won the WAR");
-    } else {
-      document
-        .getElementById("current-card-player")
-        .classList.add("outline-win");
-      // playerDeck.push(pcCard);
-      // pcDeck.pop();
-      playerDeck.push(...warDeck);
-      console.log("Player won the WAR");
-    }
-
-    warDeck.splice(0, warDeck.length);
-  }
-
-  if (pcCard.value > playerCard.value) {
-    document.getElementById("current-card-pc").classList.add("outline-win");
-    pcDeck.push(playerCard);
-    playerDeck.pop();
-    console.log("PC WINS");
+  if (PLAYER_DECK.length === 0) {
+    document.getElementById("current-card-player").innerHTML =
+      "<div class='card red'>PLAYER LOSES</div>";
+    console.log("PLAYER LOSES");
+    document.getElementById("play-button").disabled = true;
     return;
   }
 
-  if (pcCard.value < playerCard.value) {
+  let pcCard = PC_DECK.pop();
+  let playerCard = PLAYER_DECK.pop();
+
+  let pcCardElement = document.getElementById("current-card-pc");
+  let playerCardElement = document.getElementById("current-card-player");
+
+  pcCardElement.innerHTML = getCard(pcCard);
+  playerCardElement.innerHTML = getCard(playerCard);
+
+  pcCardElement.classList.add("card-flip");
+  playerCardElement.classList.add("card-flip");
+
+  setTimeout(() => {
+    pcCardElement.classList.remove("card-flip");
+    playerCardElement.classList.remove("card-flip");
+  }, 600);
+
+  if (compareCardsValues(pcCard, playerCard) === 0) {
+    let warDeck = [];
+    console.log("WAR");
+    document.getElementById("game-container").classList.add("warbg");
+    while (true) {
+      warDeck.push(pcCard);
+      for (let i = 0; i < NUMBER_OF_CARDS_TO_DRAW_ON_WAR; i = i + 1) {
+        warDeck.push(PC_DECK.pop());
+      }
+
+      warDeck.push(playerCard);
+      for (let i = 0; i < NUMBER_OF_CARDS_TO_DRAW_ON_WAR; i = i + 1) {
+        warDeck.push(PLAYER_DECK.pop());
+      }
+
+      pcCard = PC_DECK.pop();
+      playerCard = PLAYER_DECK.pop();
+
+      document.getElementById("current-card-pc").innerHTML = getCard(pcCard);
+      document.getElementById("current-card-player").innerHTML =
+        getCard(playerCard);
+
+      if (compareCardsValues(pcCard, playerCard) === 1) {
+        document.getElementById("current-card-pc").classList.add("outline-win");
+        warDeck.push(pcCard);
+        warDeck.push(playerCard);
+
+        PC_DECK.unshift(...warDeck);
+        console.log("PC won the WAR");
+
+        warDeck.splice(0, warDeck.length);
+        return;
+      }
+      if (compareCardsValues(pcCard, playerCard) === -1) {
+        document
+          .getElementById("current-card-player")
+          .classList.add("outline-win");
+
+        warDeck.push(pcCard);
+        warDeck.push(playerCard);
+
+        PLAYER_DECK.unshift(...warDeck);
+        console.log("Player won the WAR");
+        warDeck.splice(0, warDeck.length);
+        return;
+      }
+
+      console.log("DRAW, MORE WAR");
+    }
+  }
+
+  if (compareCardsValues(pcCard, playerCard) === 1) {
+    document.getElementById("current-card-pc").classList.add("outline-win");
+    PC_DECK.unshift(playerCard);
+    PC_DECK.unshift(pcCard);
+    console.log("PC WINS");
+
+    return;
+  }
+
+  if (compareCardsValues(pcCard, playerCard) === -1) {
     document.getElementById("current-card-player").classList.add("outline-win");
-    playerDeck.push(pcCard);
-    pcDeck.pop();
+    PLAYER_DECK.unshift(pcCard);
+    PLAYER_DECK.unshift(playerCard);
     console.log("PLAYER WINS");
     return;
   }
-}
+};
+
+const compareCardsValues = function (card1, card2) {
+  if (card1.value > card2.value) {
+    return 1;
+  }
+  if (card1.value < card2.value) {
+    return -1;
+  }
+  return 0;
+};
 
 function initGame() {
-  fillPcDeck();
-  fillPlayerDeck();
+  console.log("INIT GAME");
+  const cardDeck = generateGameDeck();
 
-  /*   console.log(cardDeck);
-  console.log(playerDeck);
-  console.log(playerDeck.length);
-  console.log(pcDeck);
-  console.log(pcDeck.length); */
+  //let r = createPlayerDeckWithCardsFromDeck(cardDeck, 26);
+  // const pcDeck = createPlayerDeckWithCardsFromDeck(cardDeck, 26).deck;
+  // const playerDeck = createPlayerDeckWithCardsFromDeck(cardDeck, 26).deck;
+  //r = createPlayerDeckWithCardsFromDeck(r.cardDeck, 26);
+  //const playerDeck = r.deck;
+
+  PC_DECK = createPlayerDeckWithCardsFromDeck(cardDeck, 26);
+  PLAYER_DECK = createPlayerDeckWithCardsFromDeck(cardDeck, 26);
+
+  document.getElementById("current-deck-pc").innerHTML = getBackCard(
+    PC_DECK.length
+  );
+  document.getElementById("current-deck-player").innerHTML = getBackCard(
+    PLAYER_DECK.length
+  );
+
+  document.getElementById("current-card-pc").innerHTML = getBackCard();
+  document.getElementById("current-card-player").innerHTML = getBackCard();
 }

@@ -63,7 +63,7 @@ a:hover {
 }
 
 .warbg {
-  background: green;
+  background: red;
 }
 
 .card-background-text {
@@ -309,6 +309,26 @@ a:hover {
   transform: scale(0.95);
 }
 
+@keyframes flipCard {
+  0% {
+    transform: perspective(600px) rotateY(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: perspective(600px) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+.card-flip {
+  animation: flipCard 0.6s ease-out;
+}
+
+#current-card-pc .card,
+#current-card-player .card {
+  backface-visibility: hidden;
+}
+
 /* misc */
 .zoom-slider {
   position: fixed;
@@ -343,7 +363,7 @@ a:hover {
   }
 
   .small-letter-suit {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .default-letter-suit {
