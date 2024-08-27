@@ -391,7 +391,11 @@ const generateCard = function () {
 
         PC_DECK.unshift(...warDeck);
         console.log("PC won the WAR");
-
+        alert(
+          "Ohh noo! You just lost the war! The enemy got " +
+            warDeck.length +
+            " more cards!"
+        );
         warDeck.splice(0, warDeck.length);
         return;
       }
@@ -405,11 +409,13 @@ const generateCard = function () {
 
         PLAYER_DECK.unshift(...warDeck);
         console.log("Player won the WAR");
+        alert("You won the war! You got " + warDeck.length + " more cards!");
         warDeck.splice(0, warDeck.length);
         return;
       }
 
       console.log("DRAW, MORE WAR");
+      alert("IT'S A DRAW, MORE WAR INCOMING!");
     }
   }
 
