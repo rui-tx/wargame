@@ -13,6 +13,7 @@
   --card-background: #ffffff;
   --card-background-text: #ff0000;
   --hover-shadow: #00800050;
+  --warbg-color: #008000;
 }
 
 /* better defaults */
@@ -63,7 +64,15 @@ a:hover {
 }
 
 .warbg {
-  background: red;
+  animation-name: disappear;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+.wargb-reverse {
+  animation-name: disappear-reverse;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
 }
 
 .card-background-text {
@@ -85,20 +94,36 @@ a:hover {
 }
 
 .outline-win {
-  border-style: solid;
-  border-width: 2px;
-  border-color: var(--green);
+  animation: pulse 600ms;
+  box-shadow: 0 0 0 2em transparent;
+  z-index: 20;
 }
 
 .outline-lost {
   border-style: solid;
-  border-width: 2px;
+  border-width: 0px;
   border-color: var(--red);
 }
 
 .outline-text {
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 1px;
+}
+
+.dealing-card-pc,
+.dealing-card-player {
+  position: absolute;
+  transition: transform 0.1s ease-out;
+  z-index: 10;
+}
+
+.animated-card-pc,
+.animated-card-player {
+  position: fixed;
+  width: 14rem; /* Match your card width */
+  height: 18rem; /* Match your card height */
+  transition: all 0.3s ease-out;
+  z-index: 100;
 }
 
 /* containers */
@@ -130,6 +155,7 @@ a:hover {
   padding: 0.5rem;
   margin: 0.5rem;
   box-sizing: border-box;
+  z-index: 100;
 }
 
 .card-top {
@@ -309,6 +335,18 @@ a:hover {
   transform: scale(0.95);
 }
 
+.card-flip {
+  animation: flipCard 0.6s ease-out;
+  backface-visibility: visible;
+}
+
+.war-card-pc,
+.war-card-player {
+  position: absolute;
+  transition: transform 0.5s ease-out;
+  z-index: 10;
+}
+
 @keyframes flipCard {
   0% {
     transform: perspective(600px) rotateY(90deg);
@@ -320,13 +358,28 @@ a:hover {
   }
 }
 
-.card-flip {
-  animation: flipCard 0.6s ease-out;
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--accent);
+  }
 }
 
-#current-card-pc .card,
-#current-card-player .card {
-  backface-visibility: hidden;
+@keyframes disappear {
+  from {
+    background-color: var(--background);
+  }
+  to {
+    background-color: var(--warbg-color);
+  }
+}
+
+@keyframes disappear-reverse {
+  from {
+    background-color: var(--warbg-color);
+  }
+  to {
+    background-color: var(--background);
+  }
 }
 
 /* misc */
@@ -363,7 +416,7 @@ a:hover {
   }
 
   .small-letter-suit {
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
 
   .default-letter-suit {
