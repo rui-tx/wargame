@@ -7,7 +7,39 @@
     <title>War Card Game</title>
   </head>
   <body onload="initGame()">
-    <a href="./card-list.html">Card List</a>
+    <!-- <a href="./card-list.html">Card List</a> -->
+
+    <table id="scoreboard">
+      <caption>
+        Scoreboard
+      </caption>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Cards</th>
+          <th>Wins</th>
+          <th>Wars Won</th>
+          <th>Total Cards Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>PC</td>
+          <td><span id="pc-score">0</span></td>
+          <td><span id="pc-wins">0</span></td>
+          <td><span id="pc-war-wins">0</span></td>
+          <td><span id="pc-deck-value">0</span></td>
+        </tr>
+        <tr>
+          <td>Player</td>
+          <td><span id="player-score">0</span></td>
+          <td><span id="player-wins">0</span></td>
+          <td><span id="player-war-wins">0</span></td>
+          <td><span id="player-deck-value">0</span></td>
+        </tr>
+      </tbody>
+    </table>
+
     <div id="game-container">
       <div class="list">
         <div id="current-deck-pc">

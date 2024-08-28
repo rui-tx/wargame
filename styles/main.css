@@ -120,8 +120,6 @@ a:hover {
 .animated-card-pc,
 .animated-card-player {
   position: fixed;
-  width: 14rem; /* Match your card width */
-  height: 18rem; /* Match your card height */
   transition: all 0.3s ease-out;
   z-index: 100;
 }
@@ -388,6 +386,23 @@ a:hover {
   bottom: 1rem;
   right: 1rem;
   background: var(--background);
+}
+
+#scoreboard {
+  overflow: hidden;
+  background: var(--background);
+  border: 1px solid #dededf;
+  height: 10%;
+  width: 30%;
+  border-collapse: collapse;
+  border-spacing: 1px;
+  text-align: center;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 /* debug */
