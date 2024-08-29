@@ -8,10 +8,45 @@
   </head>
   <body onload="initGame()">
     <!-- <a href="./card-list.html">Card List</a> -->
+    <div class="topbar sticky small-letter">
+      <span class="button" onclick="newGame()"
+        >&Nopf;&eopf;&wopf; &Gopf;&aopf;&mopf;&eopf;</span
+      >
+      <input type="checkbox" id="modal" />
+      <label for="modal" class="button"
+        >&Sopf;&eopf;&topf;&topf;&iopf;&nopf;&gopf;&sopf;</label
+      >
+      <label for="modal" class="modal-background"></label>
+      <div class="modal">
+        <div class="modal-header">
+          <h3>&Wopf;&Aopf;&Ropf;&Gopf;&Aopf;&Mopf;&Eopf;</h3>
+          <label for="modal">&Xopf;</label>
+        </div>
+        <div class="modal-body">
+          <p>Name:</p>
+          <input type="text" id="player-name" value="Player" />
 
-    <table id="scoreboard">
-      <caption>
-        Scoreboard
+          <p>Cards Per Player:</p>
+          <input type="number" id="cards-per-player" value="26" />
+
+          <p>Note: Some settings will apply after a new game.</p>
+        </div>
+
+        <div class="modal-footer">
+          <button class="small-letter" onclick="deleteLocalStorate()">
+            Delete Local Storage
+          </button>
+          <button class="small-letter" onclick="saveSettings()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <table id="scoreboard" class="small-letter">
+      <caption class="small-letter">
+        &nbsp;
+      </caption>
+      <caption class="small-letter">
+        &Sopf;&Copf;&Oopf;&Ropf;&Eopf; &Bopf;&Oopf;&Aopf;&Ropf;&Dopf;
       </caption>
       <thead>
         <tr>
@@ -31,7 +66,7 @@
           <td><span id="pc-deck-value">0</span></td>
         </tr>
         <tr>
-          <td>Player</td>
+          <td id="player-name-cell"></td>
           <td><span id="player-score">0</span></td>
           <td><span id="player-wins">0</span></td>
           <td><span id="player-war-wins">0</span></td>
@@ -58,12 +93,14 @@
       </div>
 
       <div class="list">
-        <div id="current-deck-player" onclick="playRound()">
+        <div id="current-deck-player" class="" onclick="playRound()">
           <div class="card">player deck</div>
         </div>
       </div>
 
-      <button id="play-button" class="" onclick="playRound()">Play Card</button>
+      <button id="play-button" class="hidden" onclick="playRound()">
+        Play Card
+      </button>
     </div>
 
     <div class="zoom-slider">
