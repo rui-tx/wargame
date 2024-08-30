@@ -7,10 +7,12 @@
     <title>War Card Game</title>
   </head>
   <body onload="initGame()">
-    <!-- <a href="./card-list.html">Card List</a> -->
     <div class="topbar sticky small-letter">
-      <span class="button" onclick="newGame()"
-        >&Nopf;&eopf;&wopf; &Gopf;&aopf;&mopf;&eopf;</span
+      <a class="button" onclick="newGame()"
+        >&Nopf;&eopf;&wopf; &Gopf;&aopf;&mopf;&eopf;</a
+      >
+      <a class="button" href="./card-list.html"
+        >&Copf;&aopf;&ropf;&dopf; &Lopf;&iopf;&sopf;&topf;</a
       >
       <input type="checkbox" id="modal" />
       <label for="modal" class="button"
@@ -23,13 +25,30 @@
           <label for="modal">&Xopf;</label>
         </div>
         <div class="modal-body">
-          <p>Name:</p>
+          <p>Name</p>
           <input type="text" id="player-name" value="Player" />
 
-          <p>Cards Per Player:</p>
+          <p>*Cards Per Player</p>
           <input type="number" id="cards-per-player" value="26" />
 
-          <p>Note: Some settings will apply after a new game.</p>
+          <!-- hack! change this please -->
+          <p>
+            <label for="theme">Game Color Theme</label>
+          </p>
+          <select id="theme">
+            <option value="default">Default</option>
+            <option value="dracula">Dracula</option>
+            <option value="monokai">Monokai</option>
+            <option value="gruvbox">Gruvbox</option>
+            <option value="vscodelight">VSCode Light</option>
+            <option value="vscodedark">VSCode Dark</option>
+            <option value="githublight">GitHub Light</option>
+            <option value="githubdark">GitHub Dark</option>
+            <option value="materiallight">Material Light</option>
+            <option value="materialdark">Material Dark</option>
+          </select>
+
+          <p>* This setting will apply after a new game.</p>
         </div>
 
         <div class="modal-footer">
@@ -42,10 +61,10 @@
     </div>
 
     <table id="scoreboard" class="small-letter">
-      <caption class="small-letter">
+      <!-- <caption class="small-letter">
         &nbsp;
-      </caption>
-      <caption class="small-letter">
+      </caption> -->
+      <caption id="scoreboard-title" class="small-letter">
         &Sopf;&Copf;&Oopf;&Ropf;&Eopf; &Bopf;&Oopf;&Aopf;&Ropf;&Dopf;
       </caption>
       <thead>

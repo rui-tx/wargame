@@ -757,6 +757,7 @@ function initGame() {
   // load settings
   const playerName = localStorage.getItem("playerName");
   let cardsPerPlayer = localStorage.getItem("cardsPerPlayer");
+  const theme = localStorage.getItem("theme");
 
   // TODO Change this to a function
   // load game state from local storage
@@ -767,7 +768,16 @@ function initGame() {
   }
 
   const cardDeck = generateGameDeck();
-  console.log(cardDeck);
+
+  if (theme) {
+    if (theme === null) {
+      console.warn("Theme is null, defaulting to default");
+      theme = "default";
+      localStorage.setItem("theme", theme);
+    }
+    applyTheme(theme);
+    document.getElementById("theme").value = theme;
+  }
 
   if (playerName) {
     if (playerName === null) {
@@ -887,6 +897,7 @@ const idleTimer = function () {
 const saveSettings = function () {
   const playerName = document.getElementById("player-name").value;
   const cardsPerPlayer = document.getElementById("cards-per-player").value;
+  const themeName = document.getElementById("theme");
 
   if (cardsPerPlayer > 26 || cardsPerPlayer < 1) {
     console.warn("Invalid cards per player");
@@ -906,6 +917,9 @@ const saveSettings = function () {
 
   localStorage.setItem("playerName", playerName);
   localStorage.setItem("cardsPerPlayer", cardsPerPlayer);
+  localStorage.setItem("theme", theme.options[theme.selectedIndex].value);
+
+  applyTheme(theme.value);
 
   alert("Settings saved!");
 };
@@ -915,4 +929,190 @@ const deleteLocalStorate = function () {
     localStorage.clear();
     alert("Local storage deleted!");
   }
+};
+
+const applyTheme = function (theme) {
+  // default color scheme
+  let defaultFontColor = "#4a4a4a";
+  let defaultFontShadow = "#ffffff";
+  let background = "#f9f9f9";
+  let white = "#ffffff";
+  let black = "#000000";
+  let red = "#ff0000";
+  let green = "#008000";
+  let blue = "#0000ff";
+  let accent = "#000080";
+  let accentShadow = "#00008042";
+  let cardBackground = "#ffffff";
+  let cardBackgroundText = "#ff0000";
+  let hoverShadow = "#00800050";
+  let warbgColor = "#008000";
+
+  switch (theme) {
+    case "materiallight":
+      defaultFontColor = "#000000";
+      defaultFontShadow = "#FFFFFF";
+      background = "#FFFFFF";
+      white = "#FFFFFF";
+      black = "#000000";
+      red = "#B00020";
+      green = "#4CAF50";
+      blue = "#2196F3";
+      accent = "#6200EE";
+      accentShadow = "#6200EE40";
+      cardBackground = "#F5F5F5";
+      cardBackgroundText = "#000000";
+      hoverShadow = "#4CAF5050";
+      warbgColor = "#03DAC6";
+      break;
+    case "materialdark":
+      defaultFontColor = "#FFFFFF";
+      defaultFontShadow = "#121212";
+      background = "#121212";
+      white = "#FFFFFF";
+      black = "#000000";
+      red = "#CF6679";
+      green = "#4CAF50";
+      blue = "#2196F3";
+      accent = "#BB86FC";
+      accentShadow = "#BB86FC40";
+      cardBackground = "#1E1E1E";
+      cardBackgroundText = "#FFFFFF";
+      hoverShadow = "#4CAF5050";
+      warbgColor = "#03DAC6";
+      break;
+    case "githublight":
+      defaultFontColor = "#24292e"; // Very dark gray (almost black) for text
+      defaultFontShadow = "#ffffff"; // White (background)
+      background = "#ffffff"; // White
+      white = "#ffffff"; // White
+      black = "#24292e"; // Very dark gray (almost black)
+      red = "#d73a49"; // Red
+      green = "#28a745"; // Green
+      blue = "#0366d6"; // Blue
+      accent = "#6f42c1"; // Purple
+      accentShadow = "#6f42c140"; // Purple with opacity
+      cardBackground = "#f6f8fa"; // Very light gray for contrast
+      cardBackgroundText = "#24292e"; // Very dark gray (almost black)
+      hoverShadow = "#28a74550"; // Green with opacity
+      warbgColor = "#e36209"; // Orange
+      break;
+    case "githubdark":
+      defaultFontColor = "#c9d1d9"; // Light gray (text color)
+      defaultFontShadow = "#0d1117"; // Very dark blue-gray (background)
+      background = "#0d1117"; // Very dark blue-gray
+      white = "#ffffff"; // White
+      black = "#000000"; // Black
+      red = "#ff7b72"; // Soft red
+      green = "#7ee787"; // Soft green
+      blue = "#79c0ff"; // Soft blue
+      accent = "#d2a8ff"; // Soft purple
+      accentShadow = "#d2a8ff40"; // Soft purple with opacity
+      cardBackground = "#161b22"; // Slightly lighter background for contrast
+      cardBackgroundText = "#c9d1d9"; // Light gray
+      hoverShadow = "#7ee78750"; // Soft green with opacity
+      warbgColor = "#ffa657"; // Soft orange
+      break;
+    case "vscodelight":
+      defaultFontColor = "#000000"; // Black (text color)
+      defaultFontShadow = "#FFFFFF"; // White (background)
+      background = "#FFFFFF"; // White
+      white = "#FFFFFF"; // White
+      black = "#000000"; // Black
+      red = "#CD3131"; // Red
+      green = "#008000"; // Green
+      blue = "#0000FF"; // Blue
+      accent = "#795E26"; // Brown
+      accentShadow = "#795E2640"; // Brown with opacity
+      cardBackground = "#F3F3F3"; // Light gray for contrast
+      cardBackgroundText = "#000000"; // Black
+      hoverShadow = "#00800050"; // Green with opacity
+      warbgColor = "#AF00DB"; // Purple
+      break;
+    case "vscodedark":
+      defaultFontColor = "#D4D4D4"; // Light gray (text color)
+      defaultFontShadow = "#1E1E1E"; // Very dark gray (background)
+      background = "#1E1E1E"; // Very dark gray
+      white = "#FFFFFF"; // White
+      black = "#000000"; // Black
+      red = "#F44747"; // Red
+      green = "#6A9955"; // Green
+      blue = "#569CD6"; // Blue
+      accent = "#4EC9B0"; // Cyan
+      accentShadow = "#4EC9B040"; // Cyan with opacity
+      cardBackground = "#252526"; // Slightly lighter background for contrast
+      cardBackgroundText = "#D4D4D4"; // Light gray
+      hoverShadow = "#6A995550"; // Green with opacity
+      warbgColor = "#CE9178"; // Orange
+      break;
+    case "gruvbox":
+      defaultFontColor = "#ebdbb2"; // Light beige (text color)
+      defaultFontShadow = "#282828"; // Dark background
+      background = "#282828"; // Dark background
+      white = "#fbf1c7"; // Light beige
+      black = "#1d2021"; // Darker gray
+      red = "#cc241d"; // Red
+      green = "#98971a"; // Green
+      blue = "#458588"; // Blue
+      accent = "#d65d0e"; // Orange
+      accentShadow = "#d65d0e40"; // Orange with opacity
+      cardBackground = "#3c3836"; // Slightly lighter background for contrast
+      cardBackgroundText = "#ebdbb2"; // Light beige
+      hoverShadow = "#98971a50"; // Green with opacity
+      warbgColor = "#b16286"; // Purple
+      break;
+    case "monokai":
+      defaultFontColor = "#F8F8F2"; // Light gray (text color)
+      defaultFontShadow = "#272822"; // Very dark gray (background)
+      background = "#272822"; // Very dark gray
+      white = "#F8F8F2"; // Light gray
+      black = "#272822"; // Very dark gray
+      red = "#F92672"; // Pink/Red
+      green = "#A6E22E"; // Bright green
+      blue = "#66D9EF"; // Light blue
+      accent = "#AE81FF"; // Purple
+      accentShadow = "#AE81FF40"; // Purple with opacity
+      cardBackground = "#3E3D32"; // Slightly lighter background for contrast
+      cardBackgroundText = "#F8F8F2"; // Light gray
+      hoverShadow = "#A6E22E50"; // Green with opacity
+      warbgColor = "#FD971F"; // Orange
+      break;
+    case "dracula":
+      defaultFontColor = "#f8f8f2";
+      background = "#282a36";
+      white = "#f8f8f2";
+      black = "#000000";
+      red = "#ff5555";
+      green = "#50fa7b";
+      blue = "#8be9fd";
+      accent = "#bd93f9";
+      accentShadow = "#bd93f92a";
+      cardBackground = "#282a36";
+      cardBackgroundText = "#ff5555";
+      hoverShadow = "#bd93f950";
+      warbgColor = "#bd93f9";
+      break;
+    case "debug":
+      defaultFontColor = "#ff0000";
+      background = "#0000ff";
+      break;
+    default:
+      break;
+  }
+  cssRoot = document.querySelector(":root");
+
+  cssRoot.style.setProperty("--default-font-color", defaultFontColor);
+  cssRoot.style.setProperty("--default-font-shadow", defaultFontShadow);
+  cssRoot.style.setProperty("--background", background);
+  cssRoot.style.setProperty("--white", white);
+  cssRoot.style.setProperty("--black", black);
+  cssRoot.style.setProperty("--red", red);
+  cssRoot.style.setProperty("--green", green);
+  cssRoot.style.setProperty("--blue", blue);
+  cssRoot.style.setProperty("--accent", accent);
+  cssRoot.style.setProperty("--accent-shadow", accentShadow);
+  cssRoot.style.setProperty("--card-background", cardBackground);
+  cssRoot.style.setProperty("--card-background-text", cardBackgroundText);
+  cssRoot.style.setProperty("--hover-shadow", hoverShadow);
+  cssRoot.style.setProperty("--warbg-color", warbgColor);
 };

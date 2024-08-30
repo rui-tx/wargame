@@ -32,6 +32,7 @@ body {
 code {
   background: white;
 }
+
 a {
   border-bottom: 1px solid var(--default-font-color);
   color: var(--default-font-color);
@@ -747,6 +748,7 @@ a:hover {
   background: var(--background);
 }
 
+/* scoreboard */
 #scoreboard {
   overflow: auto;
   background: var(--background);
@@ -756,6 +758,10 @@ a:hover {
   border-spacing: 1rem;
   text-align: center;
   z-index: 980;
+}
+
+#scoreboard-title {
+  padding-top: 1.5rem;
 }
 
 .sticky {
@@ -771,14 +777,20 @@ a:hover {
 
 /* modal */
 .topbar {
-  background-color: var(--background);
   color: var(--default-font-color);
+  background-color: var(--background);
   z-index: 9999;
+}
+
+.topbar > a {
+  border-bottom: 0px;
+  padding: 0.2rem 0.2rem;
 }
 
 input[type="checkbox"] {
   display: none;
 }
+
 input[type="checkbox"]:checked ~ .modal,
 input[type="checkbox"]:checked ~ .modal-background {
   display: block;
@@ -794,6 +806,7 @@ input[type="checkbox"]:checked ~ .modal-background {
   display: none;
   z-index: 9998;
 }
+
 .modal {
   position: fixed;
   top: 0;
@@ -808,10 +821,12 @@ input[type="checkbox"]:checked ~ .modal-background {
   box-sizing: border-box;
   z-index: 9999;
 }
+
 .modal > p {
   padding: 15px;
   margin: 0;
 }
+
 .modal-header {
   background-color: var(--accent);
   border-bottom: 1px solid var(--accent-shadow);
@@ -826,6 +841,7 @@ input[type="checkbox"]:checked ~ .modal-background {
   padding-left: 1rem;
   display: inline-block;
 }
+
 .modal-header label {
   color: var(--white);
   box-sizing: border-box;
@@ -839,7 +855,7 @@ input[type="checkbox"]:checked ~ .modal-background {
   padding-left: 1rem;
 }
 
-.modal-body p {
+.modal-body > p {
   margin: 0;
 }
 
@@ -979,6 +995,10 @@ input[type="checkbox"]:checked ~ .modal-background {
   .card-back-2 {
     width: 3rem;
     height: 3rem;
+  }
+
+  #scoreboard-title {
+    padding-top: 0rem;
   }
 }
 
