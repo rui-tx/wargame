@@ -817,7 +817,7 @@ input[type="checkbox"]:checked ~ .modal-background {
   display: none;
   width: 50%;
   height: 50%;
-  background-color: var(--card-background);
+  background-color: var(--background);
   box-sizing: border-box;
   z-index: 9999;
 }
@@ -851,7 +851,7 @@ input[type="checkbox"]:checked ~ .modal-background {
 }
 
 .modal-body {
-  background-color: var(--card-background);
+  background-color: var(--background);
   padding-left: 1rem;
 }
 
